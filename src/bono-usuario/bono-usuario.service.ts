@@ -3,8 +3,8 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
-  BusinessError,
-  BusinessLogicException,
+  BussinessError,
+  BussinessLogicException,
 } from '../shared/errors/business-errors';
 import { UsuarioEntity } from 'src/usuario/usuario.entity';
 import { BonoEntity } from 'src/bono/bono.entity';
@@ -25,9 +25,9 @@ export class BonoUsuarioService {
       relations: ['bonos'],
     });
     if (!user)
-      throw new BusinessLogicException(
+      throw new BussinessLogicException(
         'The user with the given id was not found',
-        BusinessError.NOT_FOUND,
+        BussinessError.NOT_FOUND,
       );
     return user.bonos;
   }

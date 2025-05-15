@@ -3,8 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UsuarioEntity } from './usuario.entity';
 import { Repository } from 'typeorm';
 import {
-  BusinessError,
-  BusinessLogicException,
+  BussinessError,
+  BussinessLogicException,
 } from '../shared/errors/business-errors';
 
 @Injectable()
@@ -18,18 +18,18 @@ export class UsuarioService {
     if (newUser.rol === 'Profesor') {
       const gruposValidos = ['TICSW', 'IMAGINE', 'COMIT'];
       if (!gruposValidos.includes(newUser.grupoInvestigacion)) {
-        throw new BusinessLogicException(
+        throw new BussinessLogicException(
           'El grupo de investigacion no es valido',
-          BusinessError.PRECONDITION_FAILED,
+          BussinessError.PRECONDITION_FAILED,
         );
       }
     }
 
     if (newUser.rol === 'Decana') {
       if (newUser.numeroExtension.toString().length !== 8) {
-        throw new BusinessLogicException(
+        throw new BussinessLogicException(
           'El numero de extension no es valido',
-          BusinessError.PRECONDITION_FAILED,
+          BussinessError.PRECONDITION_FAILED,
         );
       }
     }
@@ -42,9 +42,9 @@ export class UsuarioService {
       where: { id },
     });
     if (!usuario) {
-      throw new BusinessLogicException(
+      throw new BussinessLogicException(
         'The user with the given id was not found',
-        BusinessError.NOT_FOUND,
+        BussinessError.NOT_FOUND,
       );
     }
 
@@ -56,16 +56,16 @@ export class UsuarioService {
       where: { id },
     });
     if (!usuario) {
-      throw new BusinessLogicException(
+      throw new BussinessLogicException(
         'The user with the given id was not found',
-        BusinessError.NOT_FOUND,
+        BussinessError.NOT_FOUND,
       );
     }
 
     if (usuario.rol === 'Decana' || usuario.bonos.length > 0) {
-      throw new BusinessLogicException(
+      throw new BussinessLogicException(
         'The user with the given id can not be deleted',
-        BusinessError.NOT_FOUND,
+        BussinessError.NOT_FOUND,
       );
     }
 

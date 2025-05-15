@@ -8,10 +8,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsuarioEntity } from './usuario/usuario.entity';
 import { BonoEntity } from './bono/bono.entity';
 import { ClaseEntity } from './clase/clase.entity';
-import { BonoUsuarioService } from './bono-usuario/bono-usuario.service';
-import { BonoClaseService } from './bono-clase/bono-clase.service';
-import { ClaseUsuarioService } from './clase-usuario/clase-usuario.service';
-import { ClaseBonoModule } from './clase-bono/clase-bono.module';
 
 @Module({
   imports: [
@@ -29,9 +25,8 @@ import { ClaseBonoModule } from './clase-bono/clase-bono.module';
       dropSchema: true,
       synchronize: true,
     }),
-    ClaseBonoModule,
   ],
   controllers: [AppController],
-  providers: [AppService, BonoUsuarioService, BonoClaseService, ClaseUsuarioService],
+  providers: [AppService],
 })
 export class AppModule {}

@@ -3,8 +3,8 @@ import { BonoEntity } from './bono.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
-  BusinessError,
-  BusinessLogicException,
+  BussinessError,
+  BussinessLogicException,
 } from '../shared/errors/business-errors';
 
 @Injectable()
@@ -16,23 +16,23 @@ export class BonoService {
 
   async crearBono(newBono: BonoEntity): Promise<BonoEntity> {
     if (newBono.monto == null) {
-      throw new BusinessLogicException(
+      throw new BussinessLogicException(
         'El monto no puede ser vacío',
-        BusinessError.PRECONDITION_FAILED,
+        BussinessError.PRECONDITION_FAILED,
       );
     }
 
     if (newBono.monto <= 0) {
-      throw new BusinessLogicException(
+      throw new BussinessLogicException(
         'El monto no puede ser negativo',
-        BusinessError.PRECONDITION_FAILED,
+        BussinessError.PRECONDITION_FAILED,
       );
     }
 
     if (newBono.usuario.rol !== 'Profesor') {
-      throw new BusinessLogicException(
+      throw new BussinessLogicException(
         'Debes ser un profesor para crear un bono',
-        BusinessError.PRECONDITION_FAILED,
+        BussinessError.PRECONDITION_FAILED,
       );
     }
     const bono = this.bonoRepository.save(newBono);
@@ -44,9 +44,9 @@ export class BonoService {
       where: { id },
     });
     if (!bono)
-      throw new BusinessLogicException(
+      throw new BussinessLogicException(
         'El bono con el codigo dado no existe',
-        BusinessError.NOT_FOUND,
+        BussinessError.NOT_FOUND,
       );
 
     return bono;
@@ -55,9 +55,9 @@ export class BonoService {
   async deleteBono(id: number) {
     const bono = await this.bonoRepository.findOne({ where: { id } });
     if (!bono)
-      throw new BusinessLogicException(
+      throw new BussinessLogicException(
         'El bono con el codigo dado no existe',
-        BusinessError.NOT_FOUND,
+        BussinessError.NOT_FOUND,
       );
 
     await this.bonoRepository.remove(bono);
