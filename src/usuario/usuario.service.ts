@@ -40,6 +40,7 @@ export class UsuarioService {
   async findUsuarioById(id: number): Promise<UsuarioEntity> {
     const usuario = await this.usuarioRepository.findOne({
       where: { id },
+      relations: ['bonos', 'clases'],
     });
     if (!usuario) {
       throw new BussinessLogicException(
@@ -54,6 +55,7 @@ export class UsuarioService {
   async eliminarUsuario(id: number) {
     const usuario = await this.usuarioRepository.findOne({
       where: { id },
+      relations: ['bonos', 'clases'],
     });
     if (!usuario) {
       throw new BussinessLogicException(

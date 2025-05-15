@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { ClaseEntity } from './clase.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
-  BusinessError,
-  BusinessLogicException,
+  BussinessError,
+  BussinessLogicException,
 } from '../shared/errors/business-errors';
 import { Repository } from 'typeorm';
 
@@ -16,9 +16,9 @@ export class ClaseService {
 
   async crearClase(newClase: ClaseEntity): Promise<ClaseEntity> {
     if (newClase.codigo.length !== 10) {
-      throw new BusinessLogicException(
+      throw new BussinessLogicException(
         'El codigo debe tener 10 caracteres',
-        BusinessError.PRECONDITION_FAILED,
+        BussinessError.PRECONDITION_FAILED,
       );
     }
 
@@ -29,11 +29,12 @@ export class ClaseService {
   async findClaseById(id: number): Promise<ClaseEntity> {
     const clase = await this.claseRepository.findOne({
       where: { id },
+      relations: ['bonos', 'usuario'],
     });
     if (!clase) {
-      throw new BusinessLogicException(
+      throw new BussinessLogicException(
         'La clase con el id dado no existe',
-        BusinessError.NOT_FOUND,
+        BussinessError.NOT_FOUND,
       );
     }
 

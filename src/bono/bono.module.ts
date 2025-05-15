@@ -4,6 +4,6 @@ import { BonoController } from './bono.controller';
 
 @Module({
   providers: [BonoService],
-  controllers: [BonoController]
+  controllers: [BonoController],
 })
 export class BonoModule {}

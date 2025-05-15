@@ -42,6 +42,7 @@ export class BonoService {
   async findBonoByCodigo(id: number): Promise<BonoEntity> {
     const bono = await this.bonoRepository.findOne({
       where: { id },
+      relations: ['usuario', 'clase'],
     });
     if (!bono)
       throw new BussinessLogicException(
