@@ -3,8 +3,8 @@ import { ClaseEntity } from 'src/clase/clase.entity';
 import {
   Column,
   Entity,
-  ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -36,9 +36,7 @@ export class UsuarioEntity {
   })
   rol: string;
 
-  @ManyToOne(() => UsuarioEntity, (usuario) => usuario.subordinados, {
-    nullable: true,
-  })
+  @OneToOne(() => UsuarioEntity, (user) => user.jefe)
   jefe: UsuarioEntity;
 
   @OneToMany(() => UsuarioEntity, (usuario) => usuario.jefe)
