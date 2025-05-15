@@ -1,10 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-export function BusinessLogicException(message: string, type: number) {
-  this.message = message;
-  this.type = type;
+export class BussinessLogicException extends Error {
+  type: BussinessError;
+  constructor(message: string, type: number) {
+    super(message);
+    this.type = type;
+  }
 }
 
-export enum BusinessError {
+export enum BussinessError {
   NOT_FOUND,
   PRECONDITION_FAILED,
   BAD_REQUEST,
